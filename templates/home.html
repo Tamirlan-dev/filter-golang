@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    FilterPRO
+{% endblock %}
+
+{% block content %}
+    <form action="/" enctype="multipart/form-data" method="POST">
+        <div class="container col-md-6">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-secondary mt-5" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                    {% endif %}
+                {% endwith %}   
+                                     
+            <div class="mb-5 mt-3">
+                <label for="Image" class="form-label">Upload image</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <input class="form-control" type="file" name="file" autocomplete="off" required>
+                    <input type="submit" value="Submit" class="btn btn-primary ml-2">
+                </div>
+            </div>
+        </div>
+    </form>
+
+         {% if filename %}
+            <div class="container col-md-5">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btn-secondary" id="filter1">Blur</button>
+                    <button type="button" class="btn btn-secondary" id="filter2">Sepia</button>
+                    <button type="button" class="btn btn-secondary" id="filter3">Warm</button>
+                    <button type="button" class="btn btn-secondary" id="filter4">Cold</button>
+                    <button type="button" class="btn btn-secondary">Filter 5</button>
+                </div>
+            </div>
+            <div class="container mt-5 d-flex">
+                <img src="{{ url_for('display_image', filename=filename) }}" class="img-fluid mx-auto d-block" />
+            </div>
+        {% else %}
+            <div class="container mt-5 d-flex">
+                <img src="/static/images/original-img.png" class="img-fluid mx-auto d-block" />
+                <img src="/static/images/filtered-img.png" class="img-fluid mx-auto d-block" />
+            </div>
+        {% endif %}
+            
+    
+        <div class="container mt-5 d-flex">
+            <img src="" id="filtered" class="img-fluid mx-auto d-block" />
+        </div>
+{% endblock %}
